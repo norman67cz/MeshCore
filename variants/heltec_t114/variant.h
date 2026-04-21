@@ -103,6 +103,16 @@
 #define EXTERNAL_FLASH_USE_QSPI
 
 ////////////////////////////////////////////////////////////////////////////////
+// QSPI
+
+#define PIN_QSPI_SCK            (46)
+#define PIN_QSPI_CS             (47)
+#define PIN_QSPI_IO0            (44)
+#define PIN_QSPI_IO1            (45)
+#define PIN_QSPI_IO2            (7)
+#define PIN_QSPI_IO3            (5)
+
+////////////////////////////////////////////////////////////////////////////////
 // Lora
 
 #define USE_SX1262
