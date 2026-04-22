@@ -998,7 +998,15 @@ void MyMesh::handleCmdFrame(size_t len) {
     int i = 0;
     out_frame[i++] = RESP_CODE_DEVICE_INFO;
     out_frame[i++] = FIRMWARE_VER_CODE;
-    out_frame[i++] = MAX_CONTACTS / 2;   // v3+
+    if (app_target_ver >= 12) {
+      uint16_t max_contacts = MAX_CONTACTS;
+      memcpy(&out_frame[i], &max_contacts, sizeof(max_contacts));
+      i += sizeof(max_contacts);
+    } else {
+      // Legacy clients expect a single-byte field that they multiply by two.
+      uint8_t legacy_max_contacts = (MAX_CONTACTS > 510) ? 255 : (MAX_CONTACTS / 2);
+      out_frame[i++] = legacy_max_contacts; // v3-v11
+    }
     out_frame[i++] = MAX_GROUP_CHANNELS; // v3+
     memcpy(&out_frame[i], &_prefs.ble_pin, 4);
     i += 4;
